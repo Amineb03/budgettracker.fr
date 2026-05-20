@@ -4,6 +4,8 @@ workflows:
 
     environment:
       xcode: latest
+      groups:
+        - default
 
     scripts:
       - name: Install Tuist
@@ -14,9 +16,10 @@ workflows:
           mise use -g tuist@latest
           tuist version
 
-      - name: Configure Swift Package Registry
+      - name: Configure Median Package Registry
         script: |
-          swift package-registry set --global https://swiftpackageindex.com
+          swift package-registry set --global https://packages.gonative.io
+          swift package-registry login https://packages.gonative.io --token "$GITHUB_TOKEN"
 
       - name: Generate Project
         script: |
@@ -28,6 +31,8 @@ workflows:
           xcodebuild archive \
           -workspace MedianIOS.xcworkspace \
           -scheme MedianIOS \
+          -sdk iphoneos \
+          -configuration Release \
           -archivePath build/MedianIOS.xcarchive
 
     artifacts:
