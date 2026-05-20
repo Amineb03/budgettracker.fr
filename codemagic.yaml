@@ -9,12 +9,14 @@ workflows:
       - name: Install Tuist
         script: |
           curl -fsSL https://mise.run | sh
-          echo "$HOME/.local/bin" >> $CM_ENV
-          mise install tuist
+          export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"
+          mise install tuist@latest
           mise use -g tuist@latest
+          tuist version
 
       - name: Generate Project
         script: |
+          export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"
           tuist generate
 
       - name: Build IPA
@@ -26,3 +28,4 @@ workflows:
 
     artifacts:
       - build/**/*.ipa
+      - build/**/*.xcarchive
