@@ -14,6 +14,10 @@ workflows:
           mise use -g tuist@latest
           tuist version
 
+      - name: Configure Swift Package Registry
+        script: |
+          swift package-registry set --global https://swiftpackageindex.com
+
       - name: Generate Project
         script: |
           export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"
@@ -22,9 +26,9 @@ workflows:
       - name: Build IPA
         script: |
           xcodebuild archive \
-          -workspace BudgetTracker.xcworkspace \
-          -scheme BudgetTracker \
-          -archivePath build/BudgetTracker.xcarchive
+          -workspace MedianIOS.xcworkspace \
+          -scheme MedianIOS \
+          -archivePath build/MedianIOS.xcarchive
 
     artifacts:
       - build/**/*.ipa
