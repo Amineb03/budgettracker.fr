@@ -4,8 +4,6 @@ workflows:
 
     environment:
       xcode: latest
-      groups:
-        - default
 
     scripts:
       - name: Install Tuist
